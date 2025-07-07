@@ -4,8 +4,14 @@ $if($or($eq(%compilation%,1),$in($lower(%albumartist%),various)),Compilation,$if
 $if($or($eq(%compilation%,1),$in($lower(%albumartist%),various)),Compilation,$if($eq(%genre%,Alternative Rock),Alt Rock,$if($eq(%genre%,Progressive Rock),Prog Rock,$if($eq(%genre%,Horrorcore),Hip-Hop\, Horrorcore,%genre%))))/
 
 If compilation tag set, or "various" in albumartist tag, save to /Compilation/ for later sorting
-	If genre = X, name directory Y > $if($eq(%genre%,X),Y, ... )
+	If genre = X, name directory Y > $if($eq(%genre%,X),Y,...,%genre%)
 	Escape , in dir name with \
+	%genre% as fallback
+
+$if($in($lower(%comment%),live),Live,)
+
+Live release subdir
+- add 'session', 'sbd', 'aud', 'fm', conditions
 
 $if2(%originalyear%,$left(%originaldate%,4),$left(%releasedate%,4),$left(%date%,4)) 
 
