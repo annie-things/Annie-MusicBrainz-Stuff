@@ -1,0 +1,26 @@
+$if($or($eq(%compilation%,1),$in($lower(%albumartist%),various)),Compilation,$if($eq(%genre%,Alternative Rock),Alt Rock,$if($eq(%genre%,Progressive Rock),Prog Rock,$if($eq(%genre%,Horrorcore),Hip-Hop\, Horrorcore,%genre%))))/$if($in($lower(%comment%),live),Live,)$if2(%originalyear%,$left(%originaldate%,4),$left(%releasedate%,4),$left(%date%,4)) $if2(%albumartist%,%artist%,%artists%) - %album% $if($and($ne(%_extension%,flac),$ne(%_extension%,wav)),$if($eq($num(%_bitrate%,0),0),$upper(%_extension%),$upper(%_extension%)-$num(%_bitrate%,0)))/$num(%tracknumber%,2) %title%
+
+
+$if($or($eq(%compilation%,1),$in($lower(%albumartist%),various)),Compilation,$if($eq(%genre%,Alternative Rock),Alt Rock,$if($eq(%genre%,Progressive Rock),Prog Rock,$if($eq(%genre%,Horrorcore),Hip-Hop\, Horrorcore,%genre%))))/
+
+If compilation tag set, or "various" in albumartist tag, save to /Compilation/ for later sorting
+	If genre = X, name directory Y > $if($eq(%genre%,X),Y, ... )
+	Escape , in dir name with \
+
+$if2(%originalyear%,$left(%originaldate%,4),$left(%releasedate%,4),$left(%date%,4)) 
+
+If original year of release tag set, print, otherwise print left 4 digits of original date of release, else left 4 digits of release date, else left 4 digits of date
+
+$if2(%albumartist%,%artist%,%artists%) - %album%
+
+Artist tag and fallbacks - Album
+
+$if($and($ne(%_extension%,flac),$ne(%_extension%,wav)),$if($eq($num(%_bitrate%,0),0),$upper(%_extension%),$upper(%_extension%)-$num(%_bitrate%,0)))
+
+If file extension is not flac, and file extension is not wav,
+	If bitrate (without decimal) = 0, print uppercase extension, ie. MP3
+		Else, print uppercase extension-bitrate, ie. MP3-320
+
+$num(%tracknumber%,2) %title%
+
+Padded track no. and title
